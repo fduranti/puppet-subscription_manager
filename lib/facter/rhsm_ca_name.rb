@@ -40,6 +40,9 @@ elsif File.exists?('/etc/rhsm/ca/katello-server-ca.pem')
 elsif File.exists?('/etc/rhsm/ca/candlepin-local.pem')
   # RedHat SAM
   cafile = '/etc/rhsm/ca/candlepin-local.pem'
+elsif File.exists?('/etc/rhsm/ca/redhat-uep.pem')
+  # RedHat Subscription Site
+  cafile = '/etc/rhsm/ca/redhat-uep.pem'
 end
 if !(cafile.nil?)
     Facter.add(:rhsm_ca_name) do

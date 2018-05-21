@@ -62,7 +62,8 @@ class subscription_manager::config {
   # III. registered to different server
   # IV. registered to same server but forcing it
   if ($::facts['rhsm_identity'] == '' or $::facts['rhsm_identity'] == undef or
-      $::facts['rhsm_ca_name'] != $::subscription_manager::server_hostname or
+      ($::facts['rhsm_ca_name'] != $::subscription_manager::server_hostname or
+      $::facts['rhsm_ca_name'] != 'Red Hat Entitlement Product Authority/emailAddress=ca-support@redhat.com') or
       $::subscription_manager::force == true ) {
       rhsm_register { $::subscription_manager::server_hostname:
         ensure  => present,

@@ -57,11 +57,13 @@ class subscription_manager::install {
   #  - no ca_name
   #  - no identity
   #  - just install normally
-  package { $_pkg:
-    ensure   => 'present',
-    provider => 'rpm',
-    source   =>
-  "http://${_hostname}/pub/${_prefix}latest.noarch.rpm",
+  if $_prefix != '' {
+    package { $_pkg:
+      ensure   => 'present',
+      provider => 'rpm',
+      source   =>
+    "http://${_hostname}/pub/${_prefix}latest.noarch.rpm",
+    }
   }
 
   # II. registered to correct server
@@ -73,7 +75,7 @@ class subscription_manager::install {
   #  - ca_name != server_hostname
   #  - identity may or may not be set
   #  - remove old, install new
-  if $_ca != '' and $_ca != undef {
+  if $_ca != '' and $_ca != undef and $_prefix != '' {
     # an SSL Certificate Authority is detected
     # does it match server_hostname (aka _suffix for the package)
     if $_ca != $_hostname {
